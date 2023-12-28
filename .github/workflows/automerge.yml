@@ -1,0 +1,23 @@
+name: Automerge
+
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  automerge:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Automerge
+        run: |
+          # Add any additional checks or conditions here
+          if [ "${{ github.event_name }}" == "pull_request" ] && [ "${{ github.event.action }}" == "closed" ] && [ "${{ github.event.pull_request.base.ref }}" == "main" ]; then
+            git config --global user.email "actions@github.com"
+            git config --global user.name "GitHub Actions"
+            git fetch
+            git checkout main
+            git merge --ff-only "${{ github.event.pull_request.head.sha }}"
+            git push
+          fi
