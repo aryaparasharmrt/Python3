@@ -22,6 +22,7 @@ jobs:
             git config --global user.name "GitHub Actions"
             git fetch
             git checkout main
+            git pull origin main --allow-unrelated-histories
             git merge --ff-only "${{ github.event.pull_request.head.sha }}"
             git push
           fi
