@@ -21,8 +21,13 @@ jobs:
             git config --global user.name "GitHub Actions"
             git fetch
             git checkout main
+      
+            # Create an empty commit to establish a common ancestor
+            git commit --allow-empty -m "Create empty commit for merge"
+      
             git fetch origin "${{ github.event.pull_request.head.ref }}:${{ github.event.pull_request.head.ref }}"
             git merge --ff-only "origin/${{ github.event.pull_request.head.ref }}"
             git push
           fi
+
 
