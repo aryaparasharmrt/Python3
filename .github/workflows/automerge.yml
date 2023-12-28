@@ -16,13 +16,13 @@ jobs:
 
       - name: Automerge
         run: |
-          # Add any additional checks or conditions here
           if [ "${{ github.event_name }}" == "pull_request" ] && [ "${{ github.event.action }}" == "closed" ] && [ "${{ github.event.pull_request.base.ref }}" == "main" ]; then
             git config --global user.email "actions@github.com"
             git config --global user.name "GitHub Actions"
             git fetch
             git checkout main
-            git fetch origin main --allow-unrelated-histories
-            git merge --ff-only "${{ github.event.pull_request.head.sha }}"
+            git fetch origin "${{ github.event.pull_request.head.ref }}:${{ github.event.pull_request.head.ref }}"
+            git merge --ff-only "origin/${{ github.event.pull_request.head.ref }}"
             git push
           fi
+
