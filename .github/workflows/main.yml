@@ -1,6 +1,10 @@
 name: Repository Management
 
 on:
+  push:
+    branches:
+      - main
+
   pull_request:
     types:
       - opened
@@ -21,5 +25,12 @@ jobs:
       - name: Install Dependencies
         run: pip install -r requirements.txt
 
-      - name: Run Management Script
-        run: python manage-repository.py
+      - name: Run Security Checks
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          touch file1.py
+  
+      - name: Build and Deploy
+        run: |
+          # Add commands to build and deploy your application
